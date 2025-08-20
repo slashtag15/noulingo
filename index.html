@@ -15,6 +15,7 @@
             flex-direction: column;
             align-items: center;
         }
+    
         header {
             background-color: #ff6f00;
             width: 100%;
@@ -24,20 +25,23 @@
             font-size: 2em;
             font-weight: bold;
         }
+    
         .container {
             max-width: 900px;
             width: 90%;
             margin: 20px;
             background: #1a1a1a;
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(255,111,0,0.6);
+            box-shadow: 0 4px 15px rgba(255, 111, 0, 0.6);
             padding: 20px;
         }
+    
         .nav-buttons {
             display: flex;
             justify-content: space-around;
             margin-bottom: 20px;
         }
+    
         .nav-buttons button {
             background: #262626;
             border: 2px solid #ff6f00;
@@ -48,23 +52,32 @@
             cursor: pointer;
             transition: background 0.3s;
         }
+    
         .nav-buttons button:hover {
             background: #ff6f00;
             color: #000;
         }
-        .lesson-card, .quiz-card {
+    
+        .lesson-card,
+        .quiz-card {
             display: none;
         }
+    
         .active {
             display: block;
         }
-        h2 { color: #ff6f00; }
+    
+        h2 {
+            color: #ff6f00;
+        }
+    
         .morse-table {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
             gap: 10px;
             margin-top: 15px;
         }
+    
         .morse-item {
             background: #262626;
             border: 1px solid #ff6f00;
@@ -72,7 +85,13 @@
             text-align: center;
             padding: 10px;
         }
-        .question { font-size: 1.5em; font-weight: bold; color: #ff6f00; }
+    
+        .question {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #ff6f00;
+        }
+    
         .options button {
             display: block;
             width: 100%;
@@ -86,129 +105,88 @@
             cursor: pointer;
             transition: background 0.3s, transform 0.2s;
         }
-        .options button:hover { background: #ff6f00; color: #000; transform: scale(1.03); }
-        .score { font-size: 1.2em; margin-top: 10px; color: #ff6f00; }
-        .correct { background-color: #33cc33 !important; color:#000 !important; }
-        .wrong { background-color: #ff3333 !important; color:#000 !important; }
-        .progress-bar { width: 100%; background-color: #333; border-radius: 8px; overflow: hidden; margin-bottom: 20px; height: 20px; }
-        .progress { height: 100%; background-color: #ff6f00; width: 0%; transition: width 0.4s ease; }
+    
+        .options button:hover {
+            background: #ff6f00;
+            color: #000;
+            transform: scale(1.03);
+        }
+    
+        .score {
+            font-size: 1.2em;
+            margin-top: 10px;
+            color: #ff6f00;
+        }
+    
+        .correct {
+            background-color: #33cc33 !important;
+            color: #000 !important;
+        }
+    
+        .wrong {
+            background-color: #ff3333 !important;
+            color: #000 !important;
+        }
+    
+        .progress-bar {
+            width: 100%;
+            background-color: #333;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            height: 20px;
+        }
+    
+        .progress {
+            height: 100%;
+            background-color: #ff6f00;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
     </style>
-</head>
-<body>
-<header>Noulingo</header>
-
-<div class="container">
-    <div class="nav-buttons">
-        <button onclick="showSection('lesson')">Learn</button>
-        <button onclick="showSection('quiz')">Practice</button>
-    </div>
-
-    <!-- Learning Section -->
-    <div id="lesson" class="lesson-card active">
-        <h2>Learn Morse Code</h2>
-        <p>Morse code uses dots (.) and dashes (-) to represent letters and numbers. Example: A = .- , B = -... </p>
-        <p>Basic Rules:</p>
-        <ul>
-            <li>Dot = short beep</li>
-            <li>Dash = long beep</li>
-            <li>1 space between parts of a letter</li>
-            <li>3 spaces between letters</li>
-        </ul>
-        <h3>Alphabet Chart:</h3>
-        <div class="morse-table">
-            <div class="morse-item">A: .-</div>
-            <div class="morse-item">B: -...</div>
-            <div class="morse-item">C: -.-.</div>
-            <div class="morse-item">D: -..</div>
-            <div class="morse-item">E: .</div>
-            <div class="morse-item">F: ..-.</div>
-            <div class="morse-item">G: --.</div>
-            <div class="morse-item">H: ....</div>
-            <div class="morse-item">I: ..</div>
-            <div class="morse-item">J: .---</div>
-        </div>
-    </div>
-
-    <!-- Quiz Section -->
-    <div id="quiz" class="quiz-card">
-        <div class="progress-bar"><div id="progress" class="progress"></div></div>
-        <div id="lesson-content" class="lesson-card">
-            <div class="question" id="question">What is Morse for A?</div>
-            <div class="options">
-                <button onclick="checkAnswer(this)" data-answer=".-">.-</button>
-                <button onclick="checkAnswer(this)" data-answer="-...">-...</button>
-                <button onclick="checkAnswer(this)" data-answer="...">...</button>
-                <button onclick="checkAnswer(this)" data-answer="..">..</button>
-            </div>
-            <div class="score">Score: <span id="score">0</span></div>
-        </div>
-    </div>
-</div>
-
-<script>
-    function showSection(section) {
-        document.getElementById('lesson').classList.remove('active');
-        document.getElementById('quiz').classList.remove('active');
-        document.getElementById(section).classList.add('active');
-    }
-
-    const questions = [
-        { q: "What is Morse for A?", a: ".-", options: [".-", "-...", "...", ".."] },
-        { q: "What is Morse for B?", a: "-...", options: ["-...", "-..", "...", ".-"] },
-        { q: "What is Morse for C?", a: "-.-.", options: ["-.-.", "-...", "..", "..."] },
-    ];
-
-    let current = 0;
-    let score = 0;
-
-    function shuffle(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-    }
-
-    function loadQuestion() {
-        if (current >= questions.length) {
-            document.getElementById('lesson-content').innerHTML = `<h2 style='color:#ff6f00;'>Lesson Complete!</h2><p>Your score: ${score}/${questions.length}</p>`;
-            return;
-        }
-        const q = questions[current];
-        document.getElementById('question').innerText = q.q;
-
-        const shuffledOptions = shuffle([...q.options]);
-        const buttons = document.querySelectorAll('.options button');
-        buttons.forEach((btn, index) => {
-            btn.innerText = shuffledOptions[index];
-            btn.dataset.answer = shuffledOptions[index];
-            btn.classList.remove('correct', 'wrong');
-        });
-
-        updateProgress();
-    }
-
-    function checkAnswer(btn) {
-        const correct = questions[current].a;
-        if (btn.dataset.answer === correct) {
-            btn.classList.add('correct');
-            score++;
-        } else {
-            btn.classList.add('wrong');
-        }
-        document.getElementById('score').innerText = score;
-        setTimeout(() => {
-            current++;
-            loadQuestion();
-        }, 800);
-    }
-
-    function updateProgress() {
-        const progress = ((current) / questions.length) * 100;
-        document.getElementById('progress').style.width = progress + '%';
-    }
-
-    loadQuestion();
-</script>
+    </head>
+    
+    <body>
+        <header>Noulingo</header>
+         <!-- Learning Section -->
+            <div id="lesson" class="lesson-card active">
+                <h2>Learn Morse Code</h2>
+                <p>Morse code uses dots (.) and dashes (-) to represent letters and numbers. Example: A = .- , B = -... </p>
+                <p>Basic Rules:</p>
+                <ul>
+                    <li>Dot = short beep</li>
+                    <li>Dash = long beep</li>
+                    <li>1 space between parts of a letter</li>
+                    <li>3 spaces between letters</li>
+                </ul>
+                <h3>Alphabet Chart:</h3>
+                <div class="morse-table">
+                    <div class="morse-item">A: .-</div>
+                    <div class="morse-item">B: -...</div>
+                    <div class="morse-item">C: -.-.</div>
+                    <div class="morse-item">D: -..</div>
+                    <div class="morse-item">E: .</div>
+                    <div class="morse-item">F: ..-.</div>
+                    <div class="morse-item">G: --.</div>
+                    <div class="morse-item">H: ....</div>
+                    <div class="morse-item">I: ..</div>
+                    <div class="morse-item">J: .---</div>
+                    <div class="morse-item">K: -.-</div>
+                    <div class="morse-item">L: .-..</div>
+                    <div class="morse-item">M: --</div>
+                    <div class="morse-item">N: -.</div>
+                    <div class="morse-item">O: ---</div>
+                    <div class="morse-item">P: .--.</div>
+                    <div class="morse-item">Q: --.-</div>
+                    <div class="morse-item">R: .-.</div>
+                    <div class="morse-item">S: ...</div>
+                    <div class="morse-item">T: -</div>
+                    <div class="morse-item">U: ..-</div>
+                    <div class="morse-item">V: ...-</div>
+                    <div class="morse-item">W: .--</div>
+                    <div class="morse-item">X: -..-</div>
+                    <div class="morse-item">Y: -.--</div>
+                    <div class="morse-item">Z: --..</div>
+                </div>
 </body>
 </html>
